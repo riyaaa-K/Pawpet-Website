@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Contact us - Pawpets</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+    <!--Header-->
+    <div class="header ">
+        <div class="container ">
+            <div class="navbar ">
+                <div class="logo ">
+                    <img src=" " width="125px ">
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="Breeds.html">Breeds</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="blog.html ">Blog</a></li>
+                        <li><a href="Account.html">Login</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-2 ">
+                <h1>Contact us</h1>
+                <p>Get in touch with us for any questions, feedback, or support.</p>
+                <a href="home.html" class="btn ">Explore Now   &#8594;</a>
+            </div>
+            <div class="col-2 ">
+                <img src="dog.png.webp ">
+            </div>
+        </div>
+    </div>
+
+    <!-- contact us -->
+
+    <div class="contact-us">
+        <div class="row1">
+            <!-- Contact info -->
+            <div class="contact-col info">
+                <div>
+                    <i class="fa fa-home"></i>
+                    <span>
+                    <h5>Block D, Chinchwad, Pune</h5>
+                    <p>Behind Lotus Hospital , Maharastra , Pune, 411019</p>
+                </span>
+                </div>
+                <div>
+                    <i class="fa fa-phone"></i>
+                    <span>
+                    <h5>+91 98765 43210</h5>
+                    <p>Monday to Saturday, 8am to 6pm</p>
+                </span>
+                </div>
+                <div>
+                    <i class="fa fa-envelope-o"></i>
+                    <span>
+                    <h5>pawpets@gmail.com</h5>
+                    <p>Email for your query</p>
+                </span>
+                </div>
+            </div>
+
+            <!-- Feedback form -->
+            <!-- Feedback form -->
+<div class="contact-col form">
+    <form id="contactForm">
+        <input type="text" name="name" placeholder="Enter your name" required>
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <textarea name="message" rows="8" placeholder="Message" required></textarea>
+        <button type="submit" class="btn">Send Message</button>
+    </form>
+</div>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault(); // prevent page reload
+
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const message = e.target.message.value;
+
+    try {
+        const response = await fetch("http://localhost:3000/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, message })
+        });
+
+        const result = await response.text();
+        alert(result); // show success or error message
+        e.target.reset(); // clear form
+    } catch (error) {
+        alert("❌ Failed to send message. Try again later.");
+        console.error(error);
+    }
+});
+</script>
+        </div>
+    </div>
+
+    <!--footer-->
+    <div class="footer ">
+        <h1>About us</h1>
+        <p>We are passionate pet lovers dedicated to providing the best care for your furry friends. <br> From grooming and training to health checkups and vaccinations, our team ensures every pet feels safe, loved, and pampered.</p>
+        <div class="icons ">
+            <i class="fa fa-facebook "></i>
+            <i class="fa fa-twitter "></i>
+            <i class="fa fa-instagram "></i>
+            <i class="fa fa-linkedin "></i>
+        </div>
+    </div>
+    </div>
+
+</body>
+
+</html>

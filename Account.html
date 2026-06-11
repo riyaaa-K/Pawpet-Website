@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Account - Pawpets</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+  <!--Header-->
+  <div class="header">
+    <div class="container ">
+      <div class="navbar ">
+        <div class="logo ">
+          <img src=" " width="125px ">
+        </div>
+        <nav>
+          <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="Breeds.html">Breeds</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="blog.html ">Blog</a></li>
+            <li><a href="Account.html">Login</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- account page-->
+  <div class="account-page ">
+    <div class="container ">
+      <div class="row ">
+        <div class="col-2 ">
+          <img src="dog.png.webp " width="100% ">
+        </div>
+
+        <div class="col-2 ">
+          <div class="form-container ">
+            <div class="form-btn">
+              <span onclick="login()">Login</span>
+              <span onclick="register()">Register</span>
+              <hr id="Indicator">
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form id="LoginForm">
+              <input type="text" id="loginUsername" name="username" placeholder="username" required>
+              <input type="password" id="loginPassword" name="password" placeholder="password" required>
+              <button type="submit" class="btn">Login</button>
+            </form>
+
+            <!-- REGISTER FORM -->
+            <form id="RegisterForm">
+              <input type="text" id="registerUsername" name="username" placeholder="username" required>
+              <input type="email" id="registerEmail" name="email" placeholder="email" required>
+              <input type="password" id="registerPassword" name="password" placeholder="password" required>
+              <button type="submit" class="btn">Register</button>
+            </form>
+
+            <!-- Message -->
+            <div id="message" style="margin-top:10px;color:green;font-weight:bold;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--footer-->
+  <div class="footer ">
+    <h1>About us</h1>
+    <p>We are passionate pet lovers dedicated to providing the best care for your furry friends. <br> From grooming and
+      training to health checkups and vaccinations, our team ensures every pet feels safe, loved, and pampered.</p>
+    <div class="icons ">
+      <i class="fa fa-facebook "></i>
+      <i class="fa fa-twitter "></i>
+      <i class="fa fa-instagram "></i>
+      <i class="fa fa-linkedin "></i>
+    </div>
+  </div>
+
+  <script>
+    const LoginForm = document.getElementById("LoginForm");
+    const RegisterForm = document.getElementById("RegisterForm");
+    const Indicator = document.getElementById("Indicator");
+    const messageBox = document.getElementById("message");
+
+    function register() {
+      RegisterForm.style.transform = "translateX(0px)";
+      LoginForm.style.transform = "translateX(0px)";
+      Indicator.style.transform = "translateX(100px)";
+      messageBox.innerText = "";
+    }
+
+    function login() {
+      RegisterForm.style.transform = "translateX(300px)";
+      LoginForm.style.transform = "translateX(300px)";
+      Indicator.style.transform = "translateX(0px)";
+      messageBox.innerText = "";
+    }
+
+    // ✅ LOGIN
+    LoginForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("loginUsername").value;
+      const password = document.getElementById("loginPassword").value;
+
+      try {
+        const response = await fetch("http://localhost:3000/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const text = await response.text();
+
+        if (text.includes("success")) {
+          messageBox.style.color = "green";
+          messageBox.innerText = "Login successful ✅ Redirecting...";
+          setTimeout(() => {
+            window.location.href = "home.html";
+          }, 1500);
+        } else {
+          messageBox.style.color = "red";
+          messageBox.innerText = text;
+        }
+      } catch (err) {
+        messageBox.style.color = "red";
+        messageBox.innerText = "Something went wrong ❌";
+      }
+    });
+
+    // ✅ REGISTER
+    RegisterForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("registerUsername").value;
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
+
+      try {
+        const response = await fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, email, password }),
+        });
+
+        const text = await response.text();
+
+        if (text.includes("success")) {
+          messageBox.style.color = "green";
+          messageBox.innerText = "Registration successful 🎉 Please login now.";
+          login(); // switch back to login form automatically
+        } else {
+          messageBox.style.color = "red";
+          messageBox.innerText = text;
+        }
+      } catch (err) {
+        messageBox.style.color = "red";
+        messageBox.innerText = "Something went wrong ❌";
+      }
+    });
+  </script>
+</body>
+
+</html>
